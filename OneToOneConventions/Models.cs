@@ -27,7 +27,7 @@ public class BlogImage
     public byte[]? Image { get; set; }
     public string? Caption { get; set; }
 
-    //public int BlogId { get; set; }             // Required foreign key property
+    public int BlogId { get; set; }             // Required foreign key property
     public Blog Blog { get; set; } = null!;     // Required reference navigation to principal
 }
 
