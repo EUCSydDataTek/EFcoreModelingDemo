@@ -3,4 +3,4 @@
 
 [EF Tutorial: Many-to-many Fluent API](https://www.entityframeworktutorial.net/efcore/configure-many-to-many-relationship-in-ef-core.aspx)
 
-![Blogging Diagram](BloggingERdiagram.png)
+![Blogging Diagram](BlogPostDiagram.png)

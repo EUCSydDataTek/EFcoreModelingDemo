@@ -16,7 +16,8 @@ class BloggingContext : DbContext
         modelBuilder.Entity<Blog>()
             .HasOne(p => p.BlogImage)
             .WithOne(i => i.Blog)
-            .HasForeignKey<BlogImage>(b => b.BlogForeignKey);
+            .HasForeignKey<BlogImage>(b => b.BlogForeignKey)
+            .IsRequired();
     }
 }
 
@@ -36,5 +37,5 @@ public class BlogImage
 
     //public int BlogId { get; set; }             // FK name matches PK
     public int BlogForeignKey { get; set; }       // FK, name don't matches PK
-    public Blog? Blog { get; set; }
+    public Blog Blog { get; set; } = null!;
 }

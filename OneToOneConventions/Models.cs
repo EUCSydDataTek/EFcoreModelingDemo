@@ -13,21 +13,21 @@ class BloggingContext : DbContext
         .LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
 }
 
-    public class Blog
-    {
-        public int BlogId { get; set; }
-        public string? Url { get; set; }
+public class Blog
+{
+    public int BlogId { get; set; }
+    public string? Url { get; set; }
 
-        public BlogImage? BlogImage { get; set; }
-    }
+    public BlogImage? BlogImage { get; set; }
+}
 
-    public class BlogImage
-    {
-        public int BlogImageId { get; set; }
-        public byte[]? Image { get; set; }
-        public string? Caption { get; set; }
+public class BlogImage
+{
+    public int BlogImageId { get; set; }
+    public byte[]? Image { get; set; }
+    public string? Caption { get; set; }
 
-        public int BlogId { get; set; }     // FK
-        public Blog? Blog { get; set; }
-    }
+    //public int BlogId { get; set; }             // Required foreign key property
+    public Blog Blog { get; set; } = null!;     // Required reference navigation to principal
+}
 

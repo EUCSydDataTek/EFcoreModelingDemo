@@ -5,7 +5,7 @@ namespace ManyToManyFluentAPI;
 class BloggingContext : DbContext
 {
     public DbSet<Post> Posts { get; set; }
-    public DbSet<PostTag> PostTags { get; set; }
+    public DbSet<Tag> Tags { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder
@@ -14,18 +14,10 @@ class BloggingContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<PostTag>()
-                 .HasKey(t => new { t.PostId, t.TagId });
-
-        modelBuilder.Entity<PostTag>()
-        .HasOne(pt => pt.Post)
-        .WithMany(p => p.PostTags)
-        .HasForeignKey(pt => pt.PostId);
-
-        modelBuilder.Entity<PostTag>()
-            .HasOne(pt => pt.Tag)
-            .WithMany(t => t.PostTags)
-            .HasForeignKey(pt => pt.TagId);
+        modelBuilder.Entity<Post>()
+        .HasMany(e => e.Tags)
+        .WithMany(e => e.Posts)
+        .UsingEntity("PostsToTagsJoinTable");
     }
 }
 
@@ -35,21 +27,22 @@ public class Post
     public string? Title { get; set; }
     public string? Content { get; set; }
 
-    public List<PostTag>? PostTags { get; set; }
+    public List<Tag>? Tags { get; set; }
 }
 
-public class PostTag
+
+public class Tag
+{
+    public string? TagId { get; set; }
+
+    public List<Post>? Posts { get; set; }
+}
+
+public class PostsToTagsJoinTable
 {
     public int PostId { get; set; }
     public Post? Post { get; set; }
 
     public string? TagId { get; set; }
     public Tag? Tag { get; set; }
-}
-
-public class Tag
-{
-    public string? TagId { get; set; }
-
-    public List<PostTag>? PostTags { get; set; }
 }
